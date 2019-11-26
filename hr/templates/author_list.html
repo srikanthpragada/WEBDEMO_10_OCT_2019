@@ -1,0 +1,33 @@
+{% extends "author_master.html" %}
+
+{% block body %}
+
+<h2>List of Authors</h2>
+
+<table width="100%">
+    <tr class="colhead">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>
+
+        </th>
+    </tr>
+
+    {% for author in authors %}
+    <tr>
+        <td>{{author.id}}</td>
+        <td>{{author.name}}</td>
+        <td>{{author.email}}</td>
+        <td>{{author.mobile}}</td>
+        <td style="text-align:center">
+            <a href="/hr/author/edit/{{author.id}}">Edit</a>
+            <a href="/hr/author/delete/{{author.id}}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

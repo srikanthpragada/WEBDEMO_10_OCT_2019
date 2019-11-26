@@ -8,3 +8,6 @@ class Author(models.Model):
     email = models.CharField(max_length=50, unique=True)
     mobile = models.CharField(max_length=10, null=True)
     profile = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.name + "," + self.email

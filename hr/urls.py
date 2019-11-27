@@ -13,4 +13,6 @@ urlpatterns = [
     path('author/home/', author_views.author_home),
     path('author/list/', author_views.author_list),
     path('author/delete/<int:id>', author_views.author_delete),
+    path('author/add/', author_views.author_add),
+    path('author/edit/<int:id>', author_views.author_edit),
 ]

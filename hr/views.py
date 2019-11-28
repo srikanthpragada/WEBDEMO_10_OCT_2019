@@ -39,3 +39,11 @@ def list_countries(request):
                        key=lambda c: c['population'],
                        reverse=True)[:20]
     return render(request, 'list_countries.html', {'countries': countries})
+
+
+def ajax_demo(request):
+    return render(request, 'ajax_demo.html')
+
+
+def send_datetime(request):
+    return HttpResponse(str(datetime.now()))

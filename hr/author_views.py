@@ -1,3 +1,4 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from .models import Author
@@ -17,14 +18,14 @@ def author_list(request):
                   {'authors': authors})
 
 
-def author_delete(request,id):
+def author_delete(request, id):
     try:
         author = Author.objects.get(id=id)
         author.delete()
         return redirect("/hr/author/list")
     except ObjectDoesNotExist:
-        return render(request,'author_delete.html',
-                      {'msg':'Author Id Not Found!'})
+        return render(request, 'author_delete.html',
+                      {'msg': 'Author Id Not Found!'})
     except:
         return render(request, 'author_delete.html',
                       {'msg': 'Author could not be deleted!'})
@@ -38,28 +39,37 @@ def author_add(request):
     else:
         form = AuthorForm(request.POST)
         if form.is_valid():
-            form.save() # Add author to table
+            form.save()  # Add author to table
             return redirect("/hr/author/list")
         else:
             return render(request, 'author_add.html',
                           {'form': form})
 
 
-def author_edit(request,id):
+def author_edit(request, id):
     if request.method == "GET":
         try:
             author = Author.objects.get(id=id)
             form = AuthorForm(instance=author)
             return render(request, 'author_edit.html',
-                          {'form' : form})
+                          {'form': form})
         except ObjectDoesNotExist:
             return render(request, 'author_edit.html',
                           {'msg': 'Author Id Not Found!'})
     else:
         author = Author.objects.get(id=id)
-        form = AuthorForm(instance=author,data = request.POST)
+        form = AuthorForm(instance=author, data=request.POST)
         form.save()
         return redirect("/hr/author/list")
 
 
+def author_search(request):
+    return render(request, 'author_search.html')
 
+
+def author_do_search(request):
+    name = request.GET['name']
+    # convert author objects to dict
+    authors = list(Author.objects.filter(name__contains=name).values())
+    # send list of dict in the form of array of json objects
+    return JsonResponse(authors, safe=False)

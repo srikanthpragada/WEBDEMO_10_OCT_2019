@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views, employee_views, author_views
+from hr.rest import rest_views
 
 urlpatterns = [
     path('welcome/', views.welcome),
@@ -19,4 +20,6 @@ urlpatterns = [
     path('author/edit/<int:id>', author_views.author_edit),
     path('author/search', author_views.author_search),
     path('author/dosearch/', author_views.author_do_search),
+    path('rest/authors/', rest_views.process_authors),
+    path('rest/authors/<int:id>/', rest_views.process_author),
 ]
